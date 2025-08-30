@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فرم ثبت‌نام</title>
+  <style>
+    /* استایل کلی صفحه */
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* کارت فرم */
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* استایل ورودی‌ها */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #2575fc;
+      outline: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* دکمه ثبت نام */
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2575fc;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #6a11cb;
+    }
+
+    /* ریسپانسیو */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>ثبت‌نام</h2>
+    <form id="signupForm" action="register.php" method="POST">
+      <div class="form-group">
+        <label for="fullname">نام کامل</label>
+        <input type="text" id="fullname" required>
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">ایمیل</label>
+        <input type="email" id="email" required>
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">شماره تلفن</label>
+        <input type="tel" id="phone" required>
+        <div class="error" id="phoneError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">رمز عبور</label>
+        <input type="password" id="password" required>
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">تأیید رمز عبور</label>
+        <input type="password" id="confirmPassword" required>
+        <div class="error" id="confirmError"></div>
+      </div>
+
+      <button type="submit">ثبت‌نام</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let isValid = true;
+
+      // نام کامل
+      const fullname = document.getElementById("fullname");
+      const nameError = document.getElementById("nameError");
+      if (fullname.value.trim().length < 3) {
+        nameError.textContent = "نام باید حداقل ۳ کاراکتر باشد.";
+        isValid = false;
+      } else {
+        nameError.textContent = "";
+      }
+
+      // ایمیل
+      const email = document.getElementById("email");
+      const emailError = document.getElementById("emailError");
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.value.match(emailPattern)) {
+        emailError.textContent = "ایمیل معتبر وارد کنید.";
+        isValid = false;
+      } else {
+        emailError.textContent = "";
+      }
+
+      // شماره تلفن
+      const phone = document.getElementById("phone");
+      const phoneError = document.getElementById("phoneError");
+      const phonePattern = /^[0-9]{10,15}$/;
+      if (!phone.value.match(phonePattern)) {
+        phoneError.textContent = "شماره تلفن معتبر وارد کنید.";
+        isValid = false;
+      } else {
+        phoneError.textContent = "";
+      }
+
+      // رمز عبور
+      const password = document.getElementById("password");
+      const passwordError = document.getElementById("passwordError");
+      if (password.value.length < 6) {
+        passwordError.textContent = "رمز عبور حداقل باید ۶ کاراکتر باشد.";
+        isValid = false;
+      } else {
+        passwordError.textContent = "";
+      }
+
+      // تایید رمز عبور
+      const confirmPassword = document.getElementById("confirmPassword");
+      const confirmError = document.getElementById("confirmError");
+      if (confirmPassword.value !== password.value) {
+        confirmError.textContent = "رمز عبور مطابقت ندارد.";
+        isValid = false;
+      } else {
+        confirmError.textContent = "";
+      }
+
+      if (isValid) {
+        alert("ثبت‌نام با موفقیت انجام شد 🎉");
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
